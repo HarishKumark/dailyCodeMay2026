@@ -16,35 +16,70 @@ public class Main {
 //            System.out.println(n);
 //        }
 
-        System.out.println(main.groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));
+//        System.out.println(main.groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));
 
-        main.FindAnagramsinString("cbaebabacd", "abc");
+        System.out.println(main.FindAnagramsinString("cbaebabacd", "abc"));
     }
 
-    public boolean isAnagramCheck(String input, String ang) {
 
-        for (int i = 0; i < ang.length(); i++) {
-            if (!input.contains(ang.charAt(i) + "")) {
-                return false;
-            }
+    public boolean checkInclusion(String s1, String s2) {
+
+        if (s2.length() < s1.length()) {
+            return false;
         }
-        return true;
+
+        int[] s1Count = new int[26];
+        int[] windowCount = new int[26];
+
+        for (int i = 0; i < s1.length(); i++) {
+            s1Count[s1.charAt(i) - 'a']++;
+            windowCount[s2.charAt(i) - 'a']++;
+        }
+        if (Arrays.equals(s1Count, windowCount)) {
+            return true;
+        }
+        int left = 0;
+        for (int right = s1.length(); right < s2.length(); right++) {
+            windowCount[s2.charAt(left) - 'a']--;
+            windowCount[s2.charAt(right) - 'a']++;
+
+            if (Arrays.equals(s1Count, windowCount)) {
+                return true;
+            }
+            left++;
+        }
+
+        return false;
     }
 
 
     public int FindAnagramsinString(String input, String ang) {
+        if (input.length() < ang.length()) {
+            return 0;
+        }
         int res = 0;
+        int[] angCount = new int[26];
+        int[] windowCount = new int[26];
+
+        for (int i = 0; i < ang.length(); i++) {
+            angCount[ang.charAt(i) - 'a']++;
+            windowCount[input.charAt(i) - 'a']++;
+        }
+
+        if (Arrays.equals(angCount, windowCount)) {
+            res++;
+        }
+
         int left = 0;
-
         for (int right = ang.length(); right < input.length(); right++) {
+            windowCount[input.charAt(left) - 'a']--;
+            windowCount[input.charAt(right) - 'a']++;
 
-            int totalLength = right - left;
-            String sbStr = input.substring(left, totalLength);
-            if (isAnagram(sbStr, ang)) {
-                left++;
+
+            if (Arrays.equals(angCount, windowCount)) {
                 res++;
             }
-
+            left++;
         }
         return res;
     }
