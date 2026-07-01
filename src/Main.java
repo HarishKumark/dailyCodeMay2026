@@ -6,19 +6,73 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-//        System.out.println(
-//                main.isAnagram("anagram","nagaram"));
+        System.out.println(main.maxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4));
+    }
 
 
-//        int[] out = main.twoSum(new int[]{2, 7, 11, 15}, 9);
-//
-//        for (int n : out) {
-//            System.out.println(n);
-//        }
+    public double maxAverage(int[] nums, int k) {
+        int totalSum = 0;
+        for (int i = 0; i < k; i++) {
+            totalSum += nums[i];
+        }
 
-//        System.out.println(main.groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));
+        double avg = totalSum / Double.valueOf(k);
 
-        System.out.println(main.FindAnagramsinString("cbaebabacd", "abc"));
+        int left = 0;
+        for (int right = k; right < nums.length; right++) {
+            totalSum = totalSum - nums[left] + nums[right];
+            double avgNew = totalSum / Double.valueOf(k);
+            avg = Math.max(avg, avgNew);
+            left++;
+        }
+        return avg;
+
+    }
+
+
+    public int maxOnesInWindow(int[] nums, int k) {
+        int res = 0;
+        int totalSum = 0;
+        for (int i = 0; i < k; i++) {
+            if (nums[i] >= 1) {
+                res++;
+            }
+        }
+        int sum = res;
+        int left = 0;
+        for (int right = k; right < nums.length; right++) {
+
+            sum = (sum - nums[left]) + nums[right];
+            res = Math.max(res, sum);
+            left++;
+
+        }
+        return res;
+
+    }
+
+
+    public int countWindows(int[] nums, int k, int threshold) {
+
+        int res = 0;
+        int totalSum = 0;
+        for (int i = 0; i < k; i++) {
+            totalSum += nums[i];
+        }
+        if (totalSum >= k * threshold) {
+            res++;
+        }
+
+        int left = 0;
+        for (int right = k; right < nums.length; right++) {
+            totalSum -= nums[left];
+            totalSum += nums[right];
+            if (totalSum >= k * threshold) {
+                res++;
+            }
+            left++;
+        }
+        return res;
     }
 
 
