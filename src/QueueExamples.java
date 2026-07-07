@@ -7,16 +7,21 @@ public class QueueExamples {
 
     public static void main(String[] args) {
         QueueExamples queueExamples = new QueueExamples();
+//        queueExamples.arrayDequeExample();
 //        queueExamples.priorityQueueEx();
-
         queueExamples.DequeExample();
 
     }
 
     public Deque<Integer> DequeExample() {
         Deque<Integer> d = new ArrayDeque<>();
+        d.add(1);
         d.add(2);
-        d.addFirst(1);
+        d.add(3);
+
+        d.add(3);
+        d.add(2);
+        d.add(1);
         System.out.println(d);
         return d;
     }
