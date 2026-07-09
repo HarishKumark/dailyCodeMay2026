@@ -1,3 +1,5 @@
+package com.practise;
+
 import java.util.*;
 
 public class SlidingWindowLearning {
