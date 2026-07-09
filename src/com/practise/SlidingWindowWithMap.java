@@ -1,7 +1,6 @@
 package com.practise;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SlidingWindowWithMap {
 
@@ -53,6 +52,60 @@ public class SlidingWindowWithMap {
         }
         return maxSum;
 
+    }
+
+
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<Integer>();
+
+        for (int n : nums) {
+
+            if (set.contains(n)) {
+                return true;
+            }
+            set.add(n);
+        }
+        return false;
+    }
+
+
+    public int missingNumber(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += nums[i];
+        }
+        return (n * (n + 1) / 2) - sum;
+    }
+
+
+    public int[] twoSum(int[] nums, int target) {
+
+        //sol2:
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int val = target - nums[i];
+
+            if (map.containsKey(val)) {
+                return new int[]{map.get(val), i};
+
+            }
+            map.put(nums[i], i);
+
+        }
+
+
+        //soln1
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    return new int[]{i, j};
+                }
+            }
+
+        }
+        return new int[]{};
     }
 
 
