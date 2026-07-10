@@ -8,7 +8,25 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
-        System.out.println(main.maxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4));
+//        System.out.println(main.maxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4));
+
+
+        Map<Integer, String> map =
+                new LinkedHashMap<>(16, 0.75f, true);
+        for (int i = 0; i < 17; i++) {
+            map.put(i, "A");
+        }
+
+        System.out.println(map);
+        System.out.println(map.get(1));
+
+        map.put(55, "A");
+
+
+        System.out.println(map);
+        map.put(6, "A");
+        System.out.println(map);
+
     }
 
 
