@@ -1,32 +1,120 @@
 package com.practise;
 
 import java.util.*;
+import java.util.stream.Stream;
 
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();
 //        System.out.println(main.maxAverage(new int[]{1, 12, -5, -6, 50, 3}, 4));
 
 
-        Map<Integer, String> map =
-                new LinkedHashMap<>(16, 0.75f, true);
-        for (int i = 0; i < 17; i++) {
-            map.put(i, "A");
+//        Map<Integer, String> map =
+//                new LinkedHashMap<>(16, 0.75f, true);
+//        for (int i = 0; i < 17; i++) {
+//            map.put(i, "A");
+//        }
+//
+//        System.out.println(map);
+//        System.out.println(map.get(1));
+//
+//        map.put(55, "A");
+//
+//
+//        System.out.println(map);
+//        map.put(6, "A");
+//        System.out.println(map);
+
+//        System.out.println(firstNonRepeatedCharacter("swiss"));
+
+//        System.out.println(topKFrequent(new int[]{}, 2));
+
+
+        for (int i : main.arrayRankTransform(new int[]{40, 10, 20, 30})) {
+            System.out.println(i);
+        }
+        System.out.println("========");
+        for (int i : main.arrayRankTransform(new int[]{37, 12, 28, 9, 100, 56, 80, 5, 12})) {
+            System.out.println(i);
         }
 
-        System.out.println(map);
-        System.out.println(map.get(1));
+    }
 
-        map.put(55, "A");
+    public int[] arrayRankTransform(int[] arr) {
+        Map<Integer, Integer> map = new LinkedHashMap<>();
+        int temp[] = new int[arr.length];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = arr[i];
+        }
+        Arrays.sort(arr);
+        int count = 1;
+        for (int i = 0; i < arr.length; i++) {
+            if (!map.containsKey(arr[i])) {
+                map.put(arr[i], count++);
+            }
+        }
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = map.get(temp[i]);
+        }
+        return temp;
+    }
 
 
-        System.out.println(map);
-        map.put(6, "A");
-        System.out.println(map);
+    public static List<Integer> topKFrequent(int[] numbers, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : numbers) {
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
 
+        PriorityQueue<Map.Entry<Integer, Integer>> pq =
+                new PriorityQueue<>(
+                        Comparator.comparingInt(Map.Entry::getValue)
+                );
+
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            pq.add(entry);
+        }
+
+        ArrayList<Integer> res = new ArrayList<>();
+        while (!pq.isEmpty()) {
+            res.add(pq.poll().getKey());
+        }
+        return res;
+
+    }
+
+
+    public static Character firstNonRepeatedCharacter(String input) {
+
+        Queue<Character> sq = new ArrayDeque<>();
+
+        for (char ch : input.toCharArray()) {
+            if (sq.contains(ch)) {
+                sq.remove(ch);
+            }
+            sq.add(ch);
+        }
+
+        return sq.peek();
+    }
+
+    public static Map<String, Integer> countWords(List<String> words) {
+        Map<String, Integer> map = new HashMap<>();
+        for (String str : words) {
+            map.put(str, map.getOrDefault(str, 0) + 1);
+        }
+        return map;
+    }
+
+
+    public static List<Integer> removeDuplicates(List<Integer> numbers) {
+        List<Integer> list = new LinkedList<>();
+        for (int n : numbers) {
+            if (!list.contains(n)) {
+                list.add(n);
+            }
+        }
+        return list;
     }
 
 
