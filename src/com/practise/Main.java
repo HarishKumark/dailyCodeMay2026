@@ -1,6 +1,7 @@
 package com.practise;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
@@ -30,13 +31,67 @@ public class Main {
 //        System.out.println(topKFrequent(new int[]{}, 2));
 
 
-        for (int i : main.arrayRankTransform(new int[]{40, 10, 20, 30})) {
-            System.out.println(i);
+//        for (int i : main.arrayRankTransform(new int[]{40, 10, 20, 30})) {
+//            System.out.println(i);
+//        }
+//        System.out.println("========");
+//        for (int i : main.arrayRankTransform(new int[]{37, 12, 28, 9, 100, 56, 80, 5, 12})) {
+//            System.out.println(i);
+//        }
+
+//        Map<String, Integer> salaries = new HashMap<>();
+//
+//        salaries.put("John", 50000);
+//        salaries.put("Ali", 70000);
+//        salaries.put("Peter", 60000);
+//        System.out.println(sortBySalary(salaries));
+
+
+        System.out.println(main.sequentialDigits(100, 300));
+
+//        System.out.println(main.sequentialDigits(1000, 13000));
+
+
+    }
+
+
+        public List<Integer> sequentialDigits(int low, int high) {
+            String s[] = "123456789".split("");
+            int lowLen = String.valueOf(low).length();
+            int highLen = String.valueOf(high).length();
+
+            List<Integer> list = new ArrayList<>();
+            for (int i = lowLen; i <= highLen; i++) {
+
+                int start = 0;
+
+                while (start + i <= s.length) {
+                    String val = "";
+
+                    for (int j = start; j < start + i; j++) {
+                        val += s[j];
+                    }
+                    if (!val.isEmpty()) {
+                        int convertVal = Integer.parseInt(val);
+                        if (convertVal >= low && convertVal <= high) {
+                            list.add(convertVal);
+                        }
+                    }
+                    start++;
+                }
+            }
+            return list;
         }
-        System.out.println("========");
-        for (int i : main.arrayRankTransform(new int[]{37, 12, 28, 9, 100, 56, 80, 5, 12})) {
-            System.out.println(i);
-        }
+
+
+    public static Map<String, Integer> sortBySalary(
+            Map<String, Integer> salaries) {
+
+        return salaries.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(
+                Collectors.toMap(
+                        Map.Entry::getKey, Map.Entry::getValue
+                )
+        );
 
     }
 
